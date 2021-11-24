@@ -40,8 +40,12 @@ if __name__ == '__main__':
             points = []
             break
 
-    cv2.line(image_draw, points1, points2, (255, 0, 0), thickness=3, lineType=2)
+    N = min(len(points1), len(points2))
+    assert N >= 2, 'At least four points are required'
+
+    pts1 = np.array(points1[:N])
+    pts2 = np.array(points2[:N])
+
+    cv2.line(image_draw, pts1, pts2, (255, 0, 0), thickness=3, lineType=2)
     cv2.imshow("Image", image_draw)
     cv2.waitKey(0)
-
-
