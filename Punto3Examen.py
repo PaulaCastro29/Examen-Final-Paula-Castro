@@ -35,10 +35,13 @@ if __name__ == '__main__':
         if len(points) > point_counter:
             point_counter = len(points)
             cv2.circle(image_draw, (points[-1][0], points[-1][1]), 3, [0, 0, 255], -1)
+        if key == ord("x"):
+            points2 = points.copy()
+            points = []
+            break
 
     cv2.line(image_draw, points1, points2, (255, 0, 0), thickness=3, lineType=2)
     cv2.imshow("Image", image_draw)
     cv2.waitKey(0)
-
 
 
