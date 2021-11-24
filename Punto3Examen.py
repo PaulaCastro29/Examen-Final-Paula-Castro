@@ -3,14 +3,6 @@ import sys
 import os
 import numpy as np
 
-points = []
-
-
-def click(event, x, y, flags, param):
-    if event == cv2.EVENT_LBUTTONDOWN:
-        points.append((x, y))
-
-
 if __name__ == '__main__':
     path = sys.argv[1]
     image_name = sys.argv[2]
