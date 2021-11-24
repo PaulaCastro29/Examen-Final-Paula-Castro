@@ -3,6 +3,14 @@ import sys
 import os
 import numpy as np
 
+
+points = []
+
+
+def click(event, x, y, flags, param):
+    if event == cv2.EVENT_LBUTTONDOWN:
+        points.append((x, y))
+
 if __name__ == '__main__':
     path = sys.argv[1]
     image_name = sys.argv[2]
@@ -10,24 +18,27 @@ if __name__ == '__main__':
     imagen = cv2.imread(path_file)
     image_draw = np.copy(imagen)
 
-    puntos=[]
-    def dibujando(event, x, y, flags, param):
-        # Imprimimos la información sobre los eventos que se estén realizando
-        print('x=', x)
-        print('y=', y)
-        if event == cv2.EVENT_LBUTTONDOWN:
-            cv2.circle(imagen, (x, y), 20, (255, 255, 255), 2)
-            puntos = [x, y]
+    points1 = []
+    points2 = []
 
-        cv2.line(image_draw, (x,y) (x,y), (255, 0, 0), 3, 2)
+    cv2.namedWindow("Image")
+    cv2.setMouseCallback("Image", click)
 
-    cv2.namedWindow('Imagen')
-    cv2.setMouseCallback('Imagen', dibujando)
+    point_counter = 0
     while True:
-        cv2.imshow('Imagen', imagen)
-        k = cv2.waitKey(1) & 0xFF
-    cv2.destroyAllWindows()
-    #cv2.waitKey(0)
+        cv2.imshow("Image", image_draw)
+        key = cv2.waitKey(1) & 0xFF
+        if key == ord("x"):
+            points1 = points.copy()
+            points = []
+            break
+        if len(points) > point_counter:
+            point_counter = len(points)
+            cv2.circle(image_draw, (points[-1][0], points[-1][1]), 3, [0, 0, 255], -1)
+
+    cv2.line(image_draw, points1, points2, (255, 0, 0), thickness=3, lineType=2)
+    cv2.imshow("Image", image_draw)
+    cv2.waitKey(0)
 
 
 
